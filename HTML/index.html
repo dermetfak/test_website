@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Joke Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      cursor: pointer;
+    }
+    #joke-container {
+      margin-top: 20px;
+      max-width: 80%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <button id="generate-joke-btn">Generate Joke</button>
+  <div id="joke-container"></div>
+
+  <script>
+    const jokeButton = document.getElementById("generate-joke-btn");
+    const jokeContainer = document.getElementById("joke-container");
+
+    const apiUrl = "https://functionapptest1994.azurewebsites.net/api/GetJoke?code=HCfH30q1G1paCP31iaI0imfBsFrcn1xM7Z6nAlXtUi0QAzFu3Wst3A=="; // Replace with your actual Function App URL
+
+    jokeButton.addEventListener("click", () => {
+      fetch(apiUrl)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("Error fetching joke");
+          }
+        })
+        .then((data) => {
+          jokeContainer.textContent = data.joke;
+        })
+        .catch((error) => {
+          console.error(error);
+          jokeContainer.textContent = "Error fetching joke";
+        });
+    });
+  </script>
+</body>
+</html>
